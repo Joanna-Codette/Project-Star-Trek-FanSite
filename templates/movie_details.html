@@ -21,10 +21,8 @@
 
 <!-- <img src= "https://image.tmdb.org/t/p/w500/{{movie.poster_path}}"> </br> -->
 
-<a href="{{ link }}">WATCH TRAILER!</a>
+<a href="{{ link }}" target="_blank">WATCH TRAILER!</a>
  
-
-
 {% if session.get('user_email') %}
 <h2>Rate this movie</h2>
 <form action="/movies/{{ movie.movie_id }}/ratings" method="POST">
