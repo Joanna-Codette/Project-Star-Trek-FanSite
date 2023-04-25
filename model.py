@@ -5,7 +5,6 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
-
 class User(db.Model):
     """A user."""
 
@@ -28,7 +27,7 @@ class Movie(db.Model):
 
     __tablename__ = "movies"
 
-    movie_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    movie_id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String, nullable=False)  # nullable is false because you don't want a movie without title
     overview = db.Column(db.Text)
     release_date = db.Column(db.DateTime)

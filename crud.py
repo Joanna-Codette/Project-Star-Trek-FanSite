@@ -29,10 +29,11 @@ def get_user_by_email(email):
     return User.query.filter(User.email == email).first()
 
 
-def create_movie(title, overview, release_date, poster_path):
+def create_movie(movie_id, title, overview, release_date, poster_path):
     """Create and return a new movie."""
 
     movie = Movie(
+        movie_id=movie_id, #integer
         title=title,  #string
         overview=overview,  #text
         release_date=release_date,  #string
@@ -53,7 +54,7 @@ def get_movies():
 
 
 def get_movie_by_id(movie_id):
-    """Return a movie by primary key."""
+    """Return a movie by primary key.""" 
 
     return Movie.query.get(movie_id)
 

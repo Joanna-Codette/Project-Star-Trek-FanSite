@@ -3,7 +3,8 @@
 from flask import Flask, render_template, request, flash, session, redirect
 from model import connect_to_db, db
 import crud
-
+import requests
+import json
 from jinja2 import StrictUndefined
 
 app = Flask(__name__)
@@ -30,10 +31,31 @@ def all_movies():
 @app.route("/movies/<movie_id>")
 def show_movie(movie_id):
     """Show details on a particular movie."""
-
+    
     movie = crud.get_movie_by_id(movie_id)
+  
+    """make an API call here to get the video info. take the first result, 
+    take the key and then generate the video link using video key,
+    pass that link into the template"""
+  
+    # make an API call
+    base_url = 'https://api.themoviedb.org/3/movie/'
+    APIkey = '/videos?api_key=c4460360e6e1738f734e1ed2ea4ef0e3'
+    APIlink = base_url + movie_id + APIkey
+    #APIlink = 'https://api.themoviedb.org/3/movie/' + movie_id + '/videos?api_key=c4460360e6e1738f734e1ed2ea4ef0e3'
+    
+    print(APIlink)
 
-    return render_template("movie_details.html", movie=movie)
+    # get video info
+    response = requests.get(APIlink)
+    video_data = response.json()
+    print(video_data['results'][0])
+    key = video_data['results'][0]['key']
+
+
+    link = "https://www.youtube.com/watch?v=" + key
+
+    return render_template("movie_details.html", movie=movie, link=link)
 
 
 @app.route("/users")
@@ -96,7 +118,9 @@ def update_rating():
     updated_score = request.json["updated_score"]
     crud.update_rating(rating_id, updated_score)
     db.session.commit()
-
+    
+    flash(f"You have updated this movie ratings to {updated_score} out of 5!")  #THIS DOESN"T WORK!!!
+    
     return "Success"
 
 @app.route("/movies/<movie_id>/ratings", methods=["POST"])
