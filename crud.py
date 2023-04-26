@@ -73,32 +73,33 @@ def update_rating(rating_id, new_score):
     rating.score = new_score
 
 
-def create_review(user, movie, review):
+def create_review(user, movie, title, review):
     """Create and return a new rating."""
 
-    rating = Review(user=user, movie=movie, review=review)
+    review = Review(user=user, movie=movie, review_title=title, user_review=review) 
+    # the left side of the variable has to match the attributes in model.py Class Review
 
     return review
 
 
 def update_review(review_id, new_review):
     """ Update a rating given rating_id and the updated score. """
-    rating = Review.query.get(review_id)
-    rating.review = new_review
+    review = Review.query.get(review_id)
+    review.review = new_review
 
 
 def create_vote(user, movie, vote):
     """Create and return a new rating."""
 
-    rating = Vote(user=user, movie=movie, vote=vote)
+    vote = Vote(user=user, movie=movie, vote=vote)
 
     return vote
 
 
 def update_vote(vote_id, new_vote):
     """ Update a rating given rating_id and the updated score. """
-    rating = Vote.query.get(vote_id)
-    rating.vote = new_vote
+    vote = Vote.query.get(vote_id)
+    vote.vote = new_vote
 
 
 if __name__ == "__main__":

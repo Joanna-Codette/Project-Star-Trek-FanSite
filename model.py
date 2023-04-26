@@ -69,7 +69,8 @@ class Review(db.Model):
     __tablename__ = "reviews"
 
     review_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    write_review = db.Column(db.Text)
+    user_review = db.Column(db.Text)
+    review_title = db.Column(db.String)  # title is short, just use String
     movie_id = db.Column(db.Integer, db.ForeignKey("movies.movie_id"))
     user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
 
@@ -78,7 +79,7 @@ class Review(db.Model):
     votes = db.relationship("Vote", back_populates="review")    # One review has many votes, back_populates should match variable in Class Vote, use "review"
 
     def __repr__(self):
-        return f"<Rating rating_id={self.rating_id} score={self.score}>"
+        return f"<Review review_id={self.review_id} score={self.user_review}>"
     
 
 class Vote(db.Model):
@@ -95,7 +96,7 @@ class Vote(db.Model):
     user = db.relationship("User", back_populates="votes")  # the back_populates need to match the variable in Class User
 
     def __repr__(self):
-        return f"<Rating rating_id={self.rating_id} score={self.score}>"
+        return f"<Vote vote_id={self.vote_id} score={self.thumps_up}>"
 
 
 def connect_to_db(flask_app, db_uri="postgresql:///ratings", echo=False): #database created, False because it will print out a lot of stuffs and become distracting.

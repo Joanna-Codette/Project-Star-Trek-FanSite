@@ -19,10 +19,23 @@
   {{ movie.overview }}
 </p>
 
-<!-- <img src= "https://image.tmdb.org/t/p/w500/{{movie.poster_path}}"> </br> -->
+<a href="{{ link }}" target="_blank" ><img src= "https://image.tmdb.org/t/p/w500/{{movie.poster_path}}"></a> </br>
 
-<a href="{{ link }}" target="_blank">WATCH TRAILER!</a>
- 
+</br>
+  <h1>Create a New Review</h1>
+  <form action="/movies/{{ movie.movie_id }}/review" method="POST">
+    <div class="form-group">
+        <label for="title">Title</label>
+        <input type="text" name="review_title" placeholder="Post title" class="form-control"></input>
+    </div>
+    <div class="form-group">
+        <label for="content">Content</label>
+        <textarea name="user_review" placeholder="Post content" class="form-control"></textarea>
+    </div>
+    <div class="form-group">
+    <button type="submit" class="btn btn-primary">Submit</button> </div>
+  </form>
+
 {% if session.get('user_email') %}
 <h2>Rate this movie</h2>
 <form action="/movies/{{ movie.movie_id }}/ratings" method="POST">
@@ -41,4 +54,11 @@
 <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script> -->
 {% endif %}
 
+</br>
+<h2>Log Out</h2>
+<form action="/logout">
+<p>
+  <input type="submit">
+</p>
+</form>
 {% endblock %}

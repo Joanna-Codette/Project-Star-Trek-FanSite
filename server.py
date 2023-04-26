@@ -112,6 +112,15 @@ def process_login():
 
     return redirect("/")
 
+
+@app.route("/logout")
+def process_logout():
+    session.pop('user_email', None)
+    flash('You were logged out.')
+    
+    return redirect('/')
+
+
 @app.route("/update_rating", methods=["POST"])
 def update_rating():
     rating_id = request.json["rating_id"]
@@ -146,6 +155,29 @@ def create_rating(movie_id):
 
     return redirect(f"/movies/{movie_id}")
 
+
+@app.route("/movies/<movie_id>/review", methods=['POST'])  # review
+def create_review(movie_id):
+
+    logged_in_email = session.get("user_email")
+    review_title = request.form.get("review_title")
+    user_review = request.form.get("user_review")
+    
+    
+    if logged_in_email is None:
+        flash("You must log in to write a review.")
+    elif not user_review:
+        flash("Error: you didn't write a review.")
+    else:
+        user = crud.get_user_by_email(logged_in_email)
+        movie = crud.get_movie_by_id(movie_id)
+
+        review = crud.create_review(user, movie, review_title, user_review)
+        db.session.add(review)
+        db.session.commit()
+    
+    
+    return render_template('movie_details.html')
 
 if __name__ == "__main__":
     connect_to_db(app)

@@ -6,7 +6,7 @@
   <h1>All Users</h1>
 
   <ul>
-    {% for rating in users %}
+    {% for user in users %}
       <li>
         <a href="/users/{{ user.user_id }}">
             {{ user.email }}
@@ -14,4 +14,13 @@
       </li>
     {% endfor %}
   </ul>
+
+</br>
+<h2>Log Out</h2>
+<form action="/logout">
+<p>
+  <input type="submit">
+</p>
+</form>
 {% endblock %}
+
