@@ -34,15 +34,10 @@ def show_movie(movie_id):
     
     movie = crud.get_movie_by_id(movie_id)
   
-    """make an API call here to get the video info. take the first result, 
-    take the key and then generate the video link using video key,
-    pass that link into the template"""
-  
     # make an API call
     base_url = 'https://api.themoviedb.org/3/movie/'
     APIkey = '/videos?api_key=c4460360e6e1738f734e1ed2ea4ef0e3'
     APIlink = base_url + movie_id + APIkey
-    #APIlink = 'https://api.themoviedb.org/3/movie/' + movie_id + '/videos?api_key=c4460360e6e1738f734e1ed2ea4ef0e3'
     
     print(APIlink)
 
@@ -51,7 +46,6 @@ def show_movie(movie_id):
     video_data = response.json()
     print(video_data['results'][0])
     key = video_data['results'][0]['key']
-
 
     link = "https://www.youtube.com/watch?v=" + key
 
@@ -110,7 +104,27 @@ def process_login():
         session["user_email"] = user.email
         flash(f"Welcome back, {user.email}!")
 
-    return redirect("/")
+
+    return redirect('/')
+
+
+@app.route("/login2/<movie_id>", methods=["POST"])
+def process_login2(movie_id):
+    """Process user login."""
+
+    email = request.form.get("email")
+    password = request.form.get("password")
+
+    user = crud.get_user_by_email(email)
+    if not user or user.password != password:
+        flash("The email or password you entered was incorrect.")
+    else:
+        # Log in user by storing the user's email in session
+        session["user_email"] = user.email
+        flash(f"Welcome back, {user.email}!")
+
+
+    return redirect(f'/movies/{movie_id}')
 
 
 @app.route("/logout")
@@ -121,6 +135,8 @@ def process_logout():
     return redirect('/')
 
 
+"""SHOULD I PASS movie_id INTO THIS DEFINITION? """
+"""SHOULD I ALSO PASS IN THE user_id INTO THIS DEFINITION? """
 @app.route("/update_rating", methods=["POST"])
 def update_rating():
     rating_id = request.json["rating_id"]
@@ -131,6 +147,7 @@ def update_rating():
     flash(f"You have updated this movie ratings to {updated_score} out of 5!")  #THIS DOESN"T WORK!!!
     
     return "Success"
+
 
 @app.route("/movies/<movie_id>/ratings", methods=["POST"])
 def create_rating(movie_id):
@@ -162,12 +179,13 @@ def create_review(movie_id):
     logged_in_email = session.get("user_email")
     review_title = request.form.get("review_title")
     user_review = request.form.get("user_review")
-    
-    
+
     if logged_in_email is None:
         flash("You must log in to write a review.")
     elif not user_review:
-        flash("Error: you didn't write a review.")
+        flash("Error: Review is missing.")
+    elif not review_title:
+        flash("Error: Review Title is missing.")
     else:
         user = crud.get_user_by_email(logged_in_email)
         movie = crud.get_movie_by_id(movie_id)
@@ -176,8 +194,10 @@ def create_review(movie_id):
         db.session.add(review)
         db.session.commit()
     
-    
-    return render_template('movie_details.html')
+        flash(f"You wrote a review of {movie.title}.")
+
+    return redirect(f"/movies/{movie_id}")
+
 
 if __name__ == "__main__":
     connect_to_db(app)

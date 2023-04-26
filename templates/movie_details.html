@@ -22,43 +22,58 @@
 <a href="{{ link }}" target="_blank" ><img src= "https://image.tmdb.org/t/p/w500/{{movie.poster_path}}"></a> </br>
 
 </br>
+{% if session.get('user_email') %}
   <h1>Create a New Review</h1>
   <form action="/movies/{{ movie.movie_id }}/review" method="POST">
     <div class="form-group">
-        <label for="title">Title</label>
+        <label for="review_title">Title</label>
         <input type="text" name="review_title" placeholder="Post title" class="form-control"></input>
     </div>
     <div class="form-group">
-        <label for="content">Content</label>
+        <label for="user_review">Review</label>
         <textarea name="user_review" placeholder="Post content" class="form-control"></textarea>
     </div>
-    <div class="form-group">
+    <div class="form-group"></div></br>
     <button type="submit" class="btn btn-primary">Submit</button> </div>
   </form>
+  <h2>Rate this movie</h2>
+    <form action="/movies/{{ movie.movie_id }}/ratings" method="POST">
+      <p>
+        Rating:
+        <select name="rating"> 
+          <option value="">Select rating</option>
+            {% for num in range(1, 6) %}
+          <option value="{{ num }}">{{ num }}</option>
+            {% endfor %}
+         </select>
+      </p>
+      <p><input type="submit" value="Submit"></p></form></br>
+  <h2>Log Out</h2>
+    <form action="/logout">
+      <p>
+        <input type="submit" value = "Logout" >
+      </p>
 
-{% if session.get('user_email') %}
-<h2>Rate this movie</h2>
-<form action="/movies/{{ movie.movie_id }}/ratings" method="POST">
-  <p>
-    Rating:
-    <select name="rating">
-      <option value="">Select rating</option>
-      {% for num in range(1, 6) %}
-        <option value="{{ num }}">{{ num }}</option>
-      {% endfor %}
-    </select>
-  </p>
-  <p><input type="submit"></p>
-</form>
+    </form>
+{% endif %}</br>
 
-<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script> -->
+{% if session.get('user_email') == None %}
+  <h2>Please Login to Rate or Review the Star Trek Movie!</h2></br>
+  <h2>Log In</h2>
+    <form action="/login2/ {{movie.movie_id}} " method="POST">
+      <p>
+        Email <input type="text" name="email">
+      </p>
+      <p>
+        Password <input type="password" name="password">
+      </p>
+      <p>
+        <input type="submit" value = "Login">
+      </p>
+      </form>
 {% endif %}
 
-</br>
-<h2>Log Out</h2>
-<form action="/logout">
-<p>
-  <input type="submit">
-</p>
-</form>
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script> -->
+
 {% endblock %}
+
