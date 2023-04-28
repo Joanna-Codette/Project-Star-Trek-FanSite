@@ -1,6 +1,6 @@
 """Server for movie ratings app."""
 
-from flask import Flask, render_template, request, flash, session, redirect
+from flask import Flask, render_template, request, flash, session, redirect, jsonify
 from model import connect_to_db, db
 import crud
 import requests
@@ -56,10 +56,35 @@ def show_movie(movie_id):
 def all_users():
     """View all users."""
 
-    users = crud.get_users()
+    #users = crud.get_users()
 
-    return render_template("all_users.html", users=users)
+    return render_template("search_display.html")
 
+
+@app.route('/searchResult.json', methods=["POST"]) #remember to put method
+def search_display():
+    """Search the email and display all the movies and ratings by this email"""
+    email = request.json.get('email')
+
+    user = crud.get_user_by_email(email)
+    
+    newlst = []
+    if not user:    
+        result_code = "ERROR" 
+        result_text = "Can't find emails!"
+    else:
+        print(user.reviews)
+        result_code = "OK"
+        result_text = f"You got search results!"
+        for review in user.reviews:  #fill in the newlst with the dictionary
+            newDict = {'review_title': review.review_title,
+                       'user_review': review.user_review,
+                       }
+            newlst.append(newDict)   #pull out the info and put in a format that can be mail
+    
+    return jsonify(newlst)
+  
+    
 
 @app.route("/users", methods=["POST"])
 def register_user():
@@ -103,7 +128,6 @@ def process_login():
         # Log in user by storing the user's email in session
         session["user_email"] = user.email
         flash(f"Welcome back, {user.email}!")
-
 
     return redirect('/')
 
