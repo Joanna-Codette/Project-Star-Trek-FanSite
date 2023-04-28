@@ -1,0 +1,31 @@
+<!-- all_users.html -->
+{% extends 'base.html' %}
+{% block title %}Search User Login Email{% endblock %}
+
+{% block body %}
+
+<form id="search-id">
+  <p>
+    Search <input id="email-search" type="text" name="email">
+  </p>
+
+  <p>
+    <button class="input-search" type="submit">Search</button>
+  </p>
+
+</form></br>
+
+<div id="searchResult"></div>
+
+
+</br>
+<h2>Log Out</h2>
+<form action="/logout">
+<p>
+  <input type="submit" value = "Logout" >
+</p>
+</form>
+
+<script src='/static/search_display.js'></script>
+
+{% endblock %}
