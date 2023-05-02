@@ -1,7 +1,7 @@
 """Server for movie ratings app."""
 
 from flask import Flask, render_template, request, flash, session, redirect, jsonify
-from model import connect_to_db, db
+from model import connect_to_db, db, Rating
 import crud
 import requests
 import json
@@ -56,35 +56,10 @@ def show_movie(movie_id):
 def all_users():
     """View all users."""
 
-    #users = crud.get_users()
+    users = crud.get_users()
 
-    return render_template("search_display.html")
+    return render_template("all_users.html", users=users)
 
-
-@app.route('/searchResult.json', methods=["POST"]) #remember to put method
-def search_display():
-    """Search the email and display all the movies and ratings by this email"""
-    email = request.json.get('email')
-
-    user = crud.get_user_by_email(email)
-    
-    newlst = []
-    if not user:    
-        result_code = "ERROR" 
-        result_text = "Can't find emails!"
-    else:
-        print(user.reviews)
-        result_code = "OK"
-        result_text = f"You got search results!"
-        for review in user.reviews:  #fill in the newlst with the dictionary
-            newDict = {'review_title': review.review_title,
-                       'user_review': review.user_review,
-                       }
-            newlst.append(newDict)   #pull out the info and put in a format that can be mail
-    
-    return jsonify(newlst)
-  
-    
 
 @app.route("/users", methods=["POST"])
 def register_user():
@@ -110,12 +85,14 @@ def show_user(user_id):
     """Show details on a particular user."""
 
     user = crud.get_user_by_id(user_id)
+    print("#####################################")
+    print(user)
 
     return render_template("user_details.html", user=user)
 
 
 @app.route("/login", methods=["POST"])
-def process_login():
+def process_login(): 
     """Process user login."""
 
     email = request.form.get("email")
@@ -165,7 +142,8 @@ def process_logout():
 def update_rating():
     rating_id = request.json["rating_id"]
     updated_score = request.json["updated_score"]
-    crud.update_rating(rating_id, updated_score)
+    Rating.update(rating_id, updated_score)
+    #crud.update_rating(rating_id, updated_score)
     db.session.commit()
     
     flash(f"You have updated this movie ratings to {updated_score} out of 5!")  #THIS DOESN"T WORK!!!
