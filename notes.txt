@@ -140,3 +140,30 @@ for (const button of editButtons) {
     });
   });
 }
+
+
+--------------------------------------------
+"""
+@app.route('/searchResult.json', methods=["POST"]) #remember to put method
+def search_display():
+    #Search the email and display all the movies and ratings by this email
+    email = request.json.get('email')
+
+    user = crud.get_user_by_email(email)
+    
+    newlst = []
+    if not user:    
+        result_code = "ERROR" 
+        result_text = "Can't find emails!"
+    else:
+        print(user.reviews)
+        result_code = "OK"
+        result_text = f"You got search results!"
+        for review in user.reviews:  #fill in the newlst with the dictionary
+            newDict = {'review_title': review.review_title,
+                       'user_review': review.user_review,
+                       }
+            newlst.append(newDict)   #pull out the info and put in a format that can be mail
+    
+    return jsonify(newlst)
+"""

@@ -5,16 +5,6 @@
 {% block body %}
   <h1>Search Users' Email</h1>
 
-<form action="/login" method="POST">
-  <p>
-    Search <input type="text" name="email">
-  </p>
-
-  <p>
-    <input type="submit" value = "Search">
-  </p>
-
-</form>
 
   <ul>
     {% for user in users %}
@@ -24,7 +14,7 @@
         </a>
       </li>
     {% endfor %}
-  </ul>
+  </ul> 
 
 </br>
 <h2>Log Out</h2>

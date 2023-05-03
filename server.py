@@ -57,6 +57,7 @@ def all_users():
     """View all users."""
 
     users = crud.get_users()
+    #user = crud.get_user_by_id(user_id)
 
     return render_template("all_users.html", users=users)
 
@@ -85,10 +86,9 @@ def show_user(user_id):
     """Show details on a particular user."""
 
     user = crud.get_user_by_id(user_id)
-    print("#####################################")
-    print(user)
 
     return render_template("user_details.html", user=user)
+    #return render_template("all_users.html", user=user)
 
 
 @app.route("/login", methods=["POST"])
@@ -123,7 +123,6 @@ def process_login2(movie_id):
         # Log in user by storing the user's email in session
         session["user_email"] = user.email
         flash(f"Welcome back, {user.email}!")
-
 
     return redirect(f'/movies/{movie_id}')
 
