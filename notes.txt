@@ -167,3 +167,18 @@ def search_display():
     
     return jsonify(newlst)
 """
+
+
+
+<ul>
+{% for rating in user.ratings %}
+    <li>
+        {{rating.movie.title}}: <span id="score_{{ rating.rating_id }}">{{ rating.score }}</span>
+          {% if session.get("user_email") == user.email %}
+            <button class="edit-movie-rating" id="{{ rating.rating_id }}"> Edit rating </button>
+        {% endif %}
+    </li>
+{% endfor %}
+</ul>
+
+<script src="/static/updateRatings.js"></script>

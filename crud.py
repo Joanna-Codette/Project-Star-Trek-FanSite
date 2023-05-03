@@ -43,7 +43,6 @@ def create_movie(movie_id, title, overview, release_date, poster_path):
         #runtime=runtime,   #integer
         #budget=budget,   #integer
     )
-
     return movie
 
 
