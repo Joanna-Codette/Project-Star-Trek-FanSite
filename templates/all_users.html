@@ -4,7 +4,8 @@
 
 {% block body %}
   <h1>Search Users' Email</h1>
-  <form id="search-id">
+
+  <form id="search-email">
     <p>
       Search <input id="email-search" type="text" name="email">
     </p>
@@ -17,16 +18,15 @@
   
   <div id="searchResult"></div>
   
-
-  <ul>
+    <!-- <ul>
     {% for user in users %}
       <li>
-        <a href="/users/{{ user.user_id }}">
+        <a href="{{ user.user_id }}">
             {{ user.email }}
         </a>
       </li>
     {% endfor %}
-  </ul> 
+  </ul>  -->
 
 </br>
 <h2>Log Out</h2>
@@ -35,4 +35,7 @@
   <input type="submit" value = "Logout" >
 </p>
 </form>
+<script src="/static/search.js"></script>
+
 {% endblock %}
+

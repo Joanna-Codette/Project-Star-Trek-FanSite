@@ -52,14 +52,31 @@ def show_movie(movie_id):
     return render_template("movie_details.html", movie=movie, link=link)
 
 
-@app.route("/users")
-def all_users():
+@app.route("/users")  # first display the page
+def all_users():    
     """View all users."""
-
     users = crud.get_users()
-    #user = crud.get_user_by_id(user_id)
 
-    return render_template("all_users.html", users=users)
+    #return render_template("all_users.html", users=users)
+
+
+@app.route('/searchResult.json', methods=["POST"]) #remember to put method
+def search_display():
+    """Search the email and display all the movies and ratings by this email"""
+    email = request.json.get('email')
+
+    user = crud.get_user_by_email(email)
+    
+    newlst = []
+    if not user:    
+        result_code = "ERROR" 
+        result_text = "Can't find emails!"
+    else:
+        result_code = "OK"
+        result_text = f"You got search results!"
+
+
+    return render_template("all_users.html", user=user)
 
 
 @app.route("/users", methods=["POST"])
