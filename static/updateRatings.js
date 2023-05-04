@@ -1,7 +1,13 @@
 // update ratings
-//const searchButton = document.querySelector('#Search-id')
-
+const searchButton = document.getElemetnById('search-email')
 const editButtons = document.querySelectorAll('.edit-movie-rating');
+
+searchButton.addEventListener("submit", evt => {
+  evt.preventDefault(); //cancels the event if it is cancelable, 
+                        //meaning that the default action that belongs to the event will not occur. 
+  console.log("")
+})
+
 
 for (const button of editButtons) {
   button.addEventListener('click', () => {

@@ -2,6 +2,14 @@
 
 {% extends 'base.html' %}
 {% block title %}User email{% endblock %}
+<form id="search-email">
+    <p>
+        Search <input id="email" type="text" name="email">
+    </p>
+    <p>
+        <button class="input-search" type="submit">Search</button>
+    </p>
+</form></br>
 
 {% block body %}
 <p>{{ user.email }}</p>
