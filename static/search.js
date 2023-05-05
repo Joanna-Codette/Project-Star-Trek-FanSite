@@ -21,10 +21,11 @@ searchButton.addEventListener("submit", evt => {
   })
   .then ((response) => response.json()) //in server.py return a dictionary - cannot convert to text, only to json
   .then ((result) => {
-    // if email found in database, print email address
+    // if email found in database, print email address and user_id
     const email = result['email']
     const user_id = result['user_id']
-    document.querySelector("#searchResult").innerHTML = `<a href="/users/${user_id}">${email}</a>` //refer to server.py line 84
+    document.querySelector("#searchResult").innerHTML = `<a href="/users/${user_id}">${email}</a>` 
+    //refer to server.py line 84
   },
 
   

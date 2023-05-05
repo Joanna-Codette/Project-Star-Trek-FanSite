@@ -1,7 +1,7 @@
 """Server for movie ratings app."""
 
 from flask import Flask, render_template, request, flash, session, redirect, jsonify
-from model import connect_to_db, db, Rating
+from model import connect_to_db, db, Rating, Review
 import crud
 import requests
 import json
@@ -68,8 +68,7 @@ def search_display():
     user = crud.get_user_by_email(email)
 
     if not user:    
-        result_code = "ERROR" 
-        result_text = "Can't find emails!"
+        flash("Can't find emails! Please search again!") 
         sendDict = {}  #return it to bottom, if you get user in the db, sendDict will be undefined and will be an error
     else:
         result_code = "OK"
@@ -157,13 +156,25 @@ def process_logout():
 """SHOULD I ALSO PASS IN THE user_id INTO THIS DEFINITION? """
 @app.route("/update_rating", methods=["POST"])
 def update_rating():
-    rating_id = request.json["rating_id"]
-    updated_score = request.json["updated_score"]
+    rating_id = request.json["rating_id"] #rating_id from .js
+    updated_score = request.json["updated_score"] #updated_rating from .js
     Rating.update(rating_id, updated_score)
     #crud.update_rating(rating_id, updated_score)
     db.session.commit()
     
     flash(f"You have updated this movie ratings to {updated_score} out of 5!")  #THIS DOESN"T WORK!!!
+    
+    return "Success"
+
+
+@app.route("/update_review", methods=["POST"])
+def update_review():
+    review_id = request.json["review_id"]
+    updated_review = request.json["updated_review"]
+    Review.update(review_id, updated_review)
+    db.session.commit()
+    
+    flash(f"You have updated this movie!")  #THIS DOESN"T WORK!!!
     
     return "Success"
 

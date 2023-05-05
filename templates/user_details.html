@@ -1,29 +1,44 @@
 <!-- users_details.html -->
-
 {% extends 'base.html' %}
+
 {% block title %}User email{% endblock %}
-<form id="search-email">
-    <p>
-        Search <input id="email" type="text" name="email">
-    </p>
-    <p>
-        <button class="input-search" type="submit">Search</button>
-    </p>
-</form></br>
 
 {% block body %}
-<p>{{ user.email }}</p>
- 
+<h2>Email Search Result: {{ user.email }}</h2>
+
+
 <ul>
-{% for rating in user.ratings %}
-    <li>
-        {{rating.movie.title}}: <span id="score_{{ rating.rating_id }}">{{ rating.score }}</span>
-        <!-- {% if session.get("user_email") == user.email %} -->
-            <button class="edit-movie-rating" id="{{ rating.rating_id }}"> Edit rating </button>
-        {% endif %}
-    </li>
-{% endfor %}
-</ul>
+    {% for rating in user.ratings %}
+        <li>
+            {{rating.movie.title}}: <span id="score_{{ rating.rating_id }}">{{ rating.score }}</span>
+            {% if session.get("user_email") == user.email %}
+                <button class="edit-movie-rating" id="{{ rating.rating_id }}"> Edit rating </button>
+            {% endif %}
+        </li>
+    {% endfor %}
+    </ul>
+    
+    <ul>
+        {% for review in user.reviews %}
+            <li>
+                {{review.movie.title}}: <span id="review_{{ review.review_id }}">{{ review.user_review }}</span>
+                {% if session.get("user_email") == user.email %}
+                    <button class="edit-movie-review" id="{{ review.review_id }}"> Edit review </button>            
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+</br>
+
+
+<h2>Log Out</h2>
+
+<form action="/logout">
+<p>
+  <input type="submit" value = "Logout" >
+</p>
+</form>
 
 <script src="/static/updateRatings.js"></script>
+
 {% endblock %}
