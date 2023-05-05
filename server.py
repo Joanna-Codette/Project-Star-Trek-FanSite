@@ -57,26 +57,37 @@ def all_users():
     """View all users."""
     users = crud.get_users()
 
-    #return render_template("all_users.html", users=users)
+    return render_template("all_users.html", users=users)
 
 
-@app.route('/searchResult.json', methods=["POST"]) #remember to put method
+@app.route('/searchResult.text', methods=["POST"]) #remember to put method
 def search_display():
     """Search the email and display all the movies and ratings by this email"""
     email = request.json.get('email')
 
     user = crud.get_user_by_email(email)
-    
-    newlst = []
+
     if not user:    
         result_code = "ERROR" 
         result_text = "Can't find emails!"
+        sendDict = {}  #return it to bottom, if you get user in the db, sendDict will be undefined and will be an error
     else:
         result_code = "OK"
         result_text = f"You got search results!"
+        sendDict = {'user_id': user.user_id,
+                   'email': user.email,
+                   }
+
+    return sendDict
 
 
-    return render_template("all_users.html", user=user)
+@app.route("/users/<user_id>")
+def show_user(user_id):
+    """Show details on a particular user."""
+
+    user = crud.get_user_by_id(user_id)
+
+    return render_template("user_details.html", user=user)
 
 
 @app.route("/users", methods=["POST"])
@@ -96,16 +107,6 @@ def register_user():
         flash("Account created! Please log in.")
 
     return redirect("/")
-
-
-@app.route("/users/<user_id>")
-def show_user(user_id):
-    """Show details on a particular user."""
-
-    user = crud.get_user_by_id(user_id)
-
-    return render_template("user_details.html", user=user)
-    #return render_template("all_users.html", user=user)
 
 
 @app.route("/login", methods=["POST"])
