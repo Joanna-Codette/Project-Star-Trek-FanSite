@@ -70,6 +70,7 @@ def update_rating(rating_id, new_score):
     """ Update a rating given rating_id and the updated score.  No return """
     rating = Rating.query.get(rating_id)
     rating.score = new_score
+    db.session.commit()
     
 
 def create_review(user, movie, review_title, user_review):
@@ -83,8 +84,10 @@ def create_review(user, movie, review_title, user_review):
 
 def update_review(review_id, new_review):
     """ Update a rating given rating_id and the updated review. no return"""
+    
     review = Review.query.get(review_id)
-    review.review = new_review
+    review.user_review = new_review
+    db.session.commit()
 
 
 def create_vote(user, movie, vote):

@@ -1,7 +1,7 @@
 //update review
 const editReviewButtons = document.querySelectorAll('.edit-movie-review');
 
-for (const button of editButtons) {
+for (const button of editReviewButtons) {
   button.addEventListener('click', () => {
     // first ask the user what they want the new rating to be
     const newReview = prompt('Please update your review');

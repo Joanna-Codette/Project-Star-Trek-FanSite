@@ -152,14 +152,12 @@ def process_logout():
     return redirect('/')
 
 
-"""SHOULD I PASS movie_id INTO THIS DEFINITION? """
-"""SHOULD I ALSO PASS IN THE user_id INTO THIS DEFINITION? """
 @app.route("/update_rating", methods=["POST"])
 def update_rating():
     rating_id = request.json["rating_id"] #rating_id from .js
     updated_score = request.json["updated_score"] #updated_rating from .js
-    Rating.update(rating_id, updated_score)
-    #crud.update_rating(rating_id, updated_score)
+    #Rating.update_rating(rating_id, updated_score)
+    crud.update_rating(rating_id, updated_score)
     db.session.commit()
     
     flash(f"You have updated this movie ratings to {updated_score} out of 5!")  #THIS DOESN"T WORK!!!
@@ -171,7 +169,8 @@ def update_rating():
 def update_review():
     review_id = request.json["review_id"]
     updated_review = request.json["updated_review"]
-    Review.update(review_id, updated_review)
+    #Review.update(review_id, updated_review)
+    crud.update_review(review_id, updated_review)
     db.session.commit()
     
     flash(f"You have updated this movie!")  #THIS DOESN"T WORK!!!
