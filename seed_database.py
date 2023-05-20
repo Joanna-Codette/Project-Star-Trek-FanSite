@@ -21,7 +21,7 @@ model.connect_to_db(server.app)
 model.db.create_all()
 
 movie_data = response.json() #convert it to the dict
-print(movie_data)
+#print(movie_data)
 print(type(movie_data))
 print(movie_data.keys())
 

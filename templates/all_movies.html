@@ -1,10 +1,14 @@
 <!-- all_movies.html -->
 {% extends 'base.html' %}
-{% block title %}All Movies{% endblock %}
+
+
 
 {% block body %}
-  <h1>All Movies</h1>
+<body style="background-color: #C2DFFF;"></body>
 
+  <center>
+  <h1>All Movies</h1>
+  
   <ul>
     {% for movie in movies %}
     <li>{{ movie.title }}</li>  
@@ -14,10 +18,13 @@
         </a>
     {% endfor %}
   </ul>
+  </center>
 
+  <center>
   <form action="/logout">
     <p>
       <input type="submit" value = "Logout" >
     </p>
-</form>
+  </form>
+  </center>
 {% endblock %}

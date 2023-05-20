@@ -1,18 +1,23 @@
 <!-- users_details.html -->
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html>
 
-{% block title %}User email{% endblock %}
+{% block title %}{% endblock %}
+
+<body style="background-color: #C2DFFF;">
+
 
 {% block body %}
-<h2>Email Search Result: {{ user.email }}</h2>
+<h2>Email Search Info Result for {{ user.email }}</h2>
 
+<link href="/static/css/site.css" rel="stylesheet">
 
 <ul>
     {% for rating in user.ratings %}
         <li>
-            {{rating.movie.title}}: <span id="score_{{ rating.rating_id }}">{{ rating.score }}</span>
-            {% if session.get("user_email") == user.email %}
-                <button class="edit-movie-rating" id="{{ rating.rating_id }}"> Edit rating </button>
+            <td>{{rating.movie.title}}: <span id="score_{{ rating.rating_id }}">{{ rating.score }}</span></td>
+            <td>{% if session.get("user_email") == user.email %}</td>
+            <td><button class="edit-movie-rating" id="{{ rating.rating_id }}"> Edit rating </button></td>
             {% endif %}
         </li>
     {% endfor %}
@@ -39,6 +44,8 @@
 </p>
 </form>
 
-<script src="/static/updateRatings.js"></script>
-<script src="/static/updateReview.js"></script>
+<script src="/static/js/updateRatings.js"></script>
+<script src="/static/js/updateReview.js"></script>
 {% endblock %}
+</body>
+</html>
