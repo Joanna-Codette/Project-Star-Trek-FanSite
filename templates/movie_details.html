@@ -1,71 +1,76 @@
 <!-- movie_details.html -->
-{% extends 'base.html' %}
-
-{% block title %}{{ movie.title }} - Details{% endblock %}
-
-
-
-{% block body %}
-
-<body style="background-color: #C2DFFF;"></body>
-
-<link src="/static/css/site.css" rel="stylesheet">
-
-<h1>{{ movie.title }}</h1>
-
-<head>
+<html>
+  <head>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
 
-    <!-- Your custom styles -->
-    <link rel="stylesheet" href="/static/css/site.css">
-  </head>
+      <head>
+        <link href="/static/css/site.css" rel="stylesheet" type="text/css">
+        <div class = "header">
+          <nav>
+            <a href="/">
+              <img src="/static/img/Star Fleet Logo.png" class="logo">
+            </a>
+          <ul class="nav-links">
+            <li><a href="/">[Home]</a></li>
+            <li><a href="/users">[Search Email]</a></li>
+            <li><a href="/movies">[Star-Trek-Movies]</a></li>
+            <li><a href="/">[Login]</a></li>
+          </ul>
+        </nav>
+      </head>  
+</html> 
 
+<body style="background-color: #C2DFFF;"></body>
+
+{% extends 'base.html' %}
+{% block title %}{{ movie.title }} - Details{% endblock %}
+{% block body %}
+<h1>{{ movie.title }}</h1>
   <p>
     {{ movie.overview }}
   </p>
 
+<center>
 <a href="{{ link }}" target="_blank" ><img src= "https://image.tmdb.org/t/p/w500/{{movie.poster_path}}"></a> </br>
+</center>
 
-</br>
+<p>
 {% if session.get('user_email') %}
-  <h1>Create a New Review</h1>
+  <h2>Create a New Review</h2>
   <form action="/movies/{{ movie.movie_id }}/review" method="POST">
     <div class="form-group">
         <label for="review_title">Title</label>
-        <input type="text" name="review_title" placeholder="Post title" class="form-control"></input>
+        <input type="text" name="review_title" placeholder="Title" class="form-control"></input>
     </div>
     <div class="form-group">
         <label for="user_review">Review</label>
-        <textarea name="user_review" placeholder="Post content" class="form-control"></textarea>
+        <textarea name="user_review" placeholder="Review" class="form-control"></textarea>
     </div>
     <div class="form-group"></div></br>
-    <button type="submit" class="btn btn-primary">Submit</button> </div>
+    <input type="submit" value="Submit">
   </form>
-  <h2>Rate this movie</h2>
-    <form action="/movies/{{ movie.movie_id }}/ratings" method="POST">
-      <p>
-        Rating:
-        <select name="rating"> 
-          <option value="">Select rating</option>
-            {% for num in range(1, 6) %}
-          <option value="{{ num }}">{{ num }}</option>
-            {% endfor %}
-         </select>
-      </p>
-        <p>
-          <input type="submit" value="Submit">
-        </p>
-    </form></br>
-    
-  <h2>Log Out</h2>
-    <form action="/logout">
-      <p>
-        <input type="submit" value = "Logout" >
-      </p>
-    </form>
-{% endif %}</br>
+</p>
 
+</br>
+  <form action="/movies/{{ movie.movie_id }}/ratings" method="POST">
+    <p>
+      <h2>Create a New Ratings</h2>
+      <select name="rating"> 
+        <option value="">Select rating</option>
+          {% for num in range(1, 6) %}
+        <option value="{{ num }}">{{ num }}</option>
+          {% endfor %}
+       </select>
+    </p>
+      <p>
+        <input type="submit" value="Submit">
+      </p>
+  </form></br>
+{% endif %}</br>
+</p>
+
+</br>
 {% if session.get('user_email') == None %}
   <h2>Please Login to Rate or Review the Star Trek Movie!</h2></br>
   <h2>Log In</h2>
@@ -82,8 +87,13 @@
       </form>
 {% endif %}
 
+
+
+
+
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+
 
 {% endblock %}
 
-</body>

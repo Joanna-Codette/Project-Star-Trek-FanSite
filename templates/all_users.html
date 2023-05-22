@@ -1,37 +1,42 @@
 <!-- all_users.html -->
-{% extends 'base.html' %}
-{% block title %}All User{% endblock %}
+<html>
+  <head>
+    <link href="/static/css/style.css" rel="stylesheet" type="text/css">
+    <div class = "header">
+      <nav>
+        <a href="/">
+          <img src="/static/img/Star Fleet Logo.png" class="logo">
+        </a>
+      <ul class="nav-links">
+        <li><a href="/">[Home]</a></li>
+        <li><a href="/movies">[Star-Trek-Movies]</a></li>
+        <li><a href="/logout">[Logout]</a></li>
+      </ul>
+    </nav>
+  </head>  
+</html>
 
 
 
-{% block body %}
+  <body style="background-color: #C2DFFF;">
+  <div class="content">
+    <center>
+      <h1>Search User Email</h1>
+      
+      <form id="search-email">
+          Search <input id="email-search" type="text" name="email">
+          <button class="input-search" type="submit">Search</button>
+      </form>
+      <p id = "searchResult"></p>
+    </center> 
+  </div>
 
-<body style="background-color: #C2DFFF;"></body>
+  </body>
 
-<h1>Search Users' Email</h1>
 
-<form id="search-email">
-  <p>
-    Search <input id="email-search" type="text" name="email">
-  </p>
 
-  <p>
-    <button class="input-search" type="submit">Search</button>
-  </p>
-
-</form>
-<p id = "searchResult"></p>
-
-</br>
-<h2>Log Out</h2>
-<form action="/logout">
-<p>
-  <input type="submit" value = "Logout" >
-</p>
-</form>
 
 
 <script src="/static/js/search.js"></script>
 
-{% endblock %}
 

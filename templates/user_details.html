@@ -1,6 +1,22 @@
 <!-- users_details.html -->
 <!DOCTYPE html>
 <html>
+  <head>
+    <link href="/static/css/style.css" rel="stylesheet" type="text/css">
+    <div class = "header">
+      <nav>
+        <a href="/">
+          <img src="/static/img/Star Fleet Logo.png" class="logo">
+        </a>
+      <ul class="nav-links">
+        <li><a href="/">[Home]</a></li>
+        <li><a href="/users">[Search Email]</a></li>
+        <li><a href="/movies">[Star-Trek-Movies]</a></li>     
+        <li><a href="/logout">[Login]</a></li>
+      </ul>
+    </nav>
+  </head>  
+</html>
 
 {% block title %}{% endblock %}
 
@@ -11,7 +27,9 @@
 <h2>Email Search Info Result for {{ user.email }}</h2>
 
 <link href="/static/css/site.css" rel="stylesheet">
-
+</br>
+</br>
+<h3>User Moving Ratings</h3>
 <ul>
     {% for rating in user.ratings %}
         <li>
@@ -22,8 +40,9 @@
         </li>
     {% endfor %}
     </ul>
-</br>  
+</br></br>
     <ul>
+      <h3>User Moving Reviews</h3>
         {% for review in user.reviews %}
             <li>
                 {{review.movie.title}}: <span id="review_{{ review.review_id }}">{{ review.user_review }}</span>
@@ -34,18 +53,13 @@
         {% endfor %}
     </ul>
 </br>
-
-
-<h2>Log Out</h2>
-
-<form action="/logout">
-<p>
-  <input type="submit" value = "Logout" >
-</p>
-</form>
-
+<center>
+</br></br>
+<h2>You must login to give Rating or Review!!!</h2>
 <script src="/static/js/updateRatings.js"></script>
 <script src="/static/js/updateReview.js"></script>
+</body>
+</center>
 {% endblock %}
 </body>
 </html>

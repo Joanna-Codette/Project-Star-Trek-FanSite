@@ -68,8 +68,8 @@ def search_display():
     user = crud.get_user_by_email(email)
 
     if not user:    
-        flash("Can't find emails! Please search again!") 
-        sendDict = {}  #return it to bottom, if you get user in the db, sendDict will be undefined and will be an error
+        return print("Can't find emails! Please search again!") 
+        #sendDict = {}  #return it to bottom, if you get user in the db, sendDict will be undefined and will be an error
     else:
         result_code = "OK"
         result_text = f"You got search results!"

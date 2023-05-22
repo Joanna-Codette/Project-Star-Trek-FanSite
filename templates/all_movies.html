@@ -1,7 +1,23 @@
 <!-- all_movies.html -->
+<html>
+  <head>
+    <link href="/static/css/style.css" rel="stylesheet" type="text/css">
+    <div class = "header">
+    <nav>
+      <a href="/">
+        <img src="/static/img/Star Fleet Logo.png" class="logo">
+      </a>
+      <ul class="nav-links">
+        <li><a href="/">[Home]</a></li>
+        <li><a href="/users">[Search]</a></li>
+        <li><a href="/movies">[Star-Trek-Movies]</a></li>
+        <li><a href="/logout">[Logout]</a></li>
+      </ul>
+    </nav>
+  </head>  
+</html>
+
 {% extends 'base.html' %}
-
-
 
 {% block body %}
 <body style="background-color: #C2DFFF;"></body>
@@ -11,7 +27,7 @@
   
   <ul>
     {% for movie in movies %}
-    <li>{{ movie.title }}</li>  
+    <p>{{ movie.title }}</p>  
         <a href="/movies/{{ movie.movie_id }}">
         <img src= "https://image.tmdb.org/t/p/w500/{{movie.poster_path}}"> </br>
         </br>
