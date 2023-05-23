@@ -32,24 +32,28 @@ def all_movies():
 def show_movie(movie_id):
     """Show details on a particular movie."""
     
+    id = ['282759', '332626', '26965', '1111972', '161334']
+
     movie = crud.get_movie_by_id(movie_id)
   
     # make an API call
-    base_url = 'https://api.themoviedb.org/3/movie/'
-    APIkey = '/videos?api_key=c4460360e6e1738f734e1ed2ea4ef0e3'
-    APIlink = base_url + movie_id + APIkey
+    if movie not in id:
+        base_url = 'https://api.themoviedb.org/3/movie/'
+        APIkey = '/videos?api_key=c4460360e6e1738f734e1ed2ea4ef0e3'
+        APIlink = base_url + movie_id + APIkey
     
-    print(APIlink)
+        print(APIlink)
 
     # get video info
-    response = requests.get(APIlink)
-    video_data = response.json()
-    print(video_data['results'][0])
-    key = video_data['results'][0]['key']
+        response = requests.get(APIlink)
+        video_data = response.json()
 
-    link = "https://www.youtube.com/watch?v=" + key
 
-    return render_template("movie_details.html", movie=movie, link=link)
+        print(video_data['results'][0])
+        key = video_data['results'][0]['key']
+        link = "https://www.youtube.com/watch?v=" + key
+
+        return render_template("movie_details.html", movie=movie, link=link)
 
 
 @app.route("/users")  # first display the page
@@ -160,7 +164,7 @@ def update_rating():
     crud.update_rating(rating_id, updated_score)
     db.session.commit()
     
-    flash(f"You have updated this movie ratings to {updated_score} out of 5!")  #THIS DOESN"T WORK!!!
+    flash(f"You have updated this movie ratings to {updated_score} out of 5!") 
     
     return "Success"
 

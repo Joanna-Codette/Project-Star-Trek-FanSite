@@ -29,7 +29,7 @@ def get_user_by_email(email):
     return User.query.filter(User.email == email).first()
 
 
-def create_movie(movie_id, title, overview, release_date, poster_path):
+def create_movie(movie_id, title, overview, release_date, poster_path, backdrop_path):
     """Create and return a new movie."""
 
     movie = Movie(
@@ -38,6 +38,7 @@ def create_movie(movie_id, title, overview, release_date, poster_path):
         overview=overview,  #text
         release_date=release_date,  #string
         poster_path=poster_path,   #string
+        backdrop_path=backdrop_path,
         #revenue=revenue,   #integer
         #video=video,   #boolean
         #runtime=runtime,   #integer

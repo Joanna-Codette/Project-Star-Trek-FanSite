@@ -22,28 +22,30 @@ model.db.create_all()
 
 movie_data = response.json() #convert it to the dict
 #print(movie_data)
-print(type(movie_data))
-print(movie_data.keys())
+#print(type(movie_data))
+#print(movie_data.keys())
 
 # Create movies, store them in list so we can use them
 # to create fake ratings
 movies_in_db = []
 for movie in movie_data["results"]:  # if I don't use result, I will get a dict that I can't loop through that
-    movie_id, title, overview, poster_path = (
+    movie_id, title, overview, poster_path, backdrop_path = (
         movie["id"],
         movie["title"],
         movie["overview"],
         movie["poster_path"],
+        movie["backdrop_path"],
         #movie["runtime"],
         #movie["budget"],
         #movie["revenue"],
     )
-
-    release_date = datetime.strptime(movie["release_date"], "%Y-%m-%d")
-
-    db_movie = crud.create_movie(movie_id, title, overview, release_date, poster_path)
     
-    movies_in_db.append(db_movie)
+    notMovie_id = [282759, 332626, 26965, 1111972, 161334]
+    
+    if movie_id not in notMovie_id:
+        release_date = datetime.strptime(movie["release_date"], "%Y-%m-%d")
+        db_movie = crud.create_movie(movie_id, title, overview, release_date, poster_path, backdrop_path)
+        movies_in_db.append(db_movie)
 
 model.db.session.add_all(movies_in_db)
 model.db.session.commit()

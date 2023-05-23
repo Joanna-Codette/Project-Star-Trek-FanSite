@@ -28,7 +28,7 @@
     {% for movie in movies %}
     <p>{{ movie.title }}</p>  
         <a href="/movies/{{ movie.movie_id }}">
-        <img src= "https://image.tmdb.org/t/p/w500/{{movie.poster_path}}"> </br>
+        <img src= "https://image.tmdb.org/t/p/w500/{{movie.backdrop_path}}"> </br>
         </br>
         </a>
     {% endfor %}

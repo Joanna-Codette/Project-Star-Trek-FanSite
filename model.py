@@ -32,6 +32,7 @@ class Movie(db.Model):
     overview = db.Column(db.Text)
     release_date = db.Column(db.DateTime)
     poster_path = db.Column(db.String)
+    backdrop_path = db.Column(db.String)
     video = db.Column(db.Boolean)
     runtime = db.Column(db.Integer)
     budget = db.Column(db.Integer)
